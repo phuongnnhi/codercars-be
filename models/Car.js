@@ -1,43 +1,34 @@
 const mongoose = require('mongoose');
+
 const carSchema = new mongoose.Schema(
 	{
-		make: {
-			type: String,
-			required: true,
-		},
-		model: {
-			type: String,
-			required: true,
-		},
-		release_date: {
-			type: Number,
-			min: 1900,
-			required: true,
-		},
-		transmission_type: {
-			type: String,
-			enum: ['MANUAL', 'AUTOMATIC', 'AUTOMATED_MANUAL', 'DIRECT_DRIVE', 'UNKNOWN'],
-			required: true,
-		},
-		size: {
-			type: String,
-			enum: ['Compact', 'Midsize', 'Large'],
-			required: true,
-		},
-		style: {
-			type: String,
-			required: true,
-		},
-		price: {
-			type: Number,
-			required: true,
-		},
-		isDeleted: { type: Boolean, default: false, required: true },
+	  Make: { type: String, required: true },
+	  Model: { type: String, required: true },
+	  Year: { type: Number, required: true },
+	  engineFuelType: { type: String, required: false }, // Adapted to use underscores
+	  
+engineHP: { type: Number, required: false },
+	  
+engineCylinders: { type: Number, required: false },
+	  transmissionType: { type: String, required: true },
+	  
+drivenWheels: { type: String, required: false },
+	  numberOfDoors: { type: Number, required: false },
+	  
+marketCategory: { type: String, required: false }, // Optional
+	  vehicleSize: { type: String, required: true },
+	  vehicleStyle: { type: String, required: true },
+	  highwayMPG: { type: Number, required: false }, // Capitalization adapted
+	  cityMPG: { type: Number, required: false },
+	  Popularity: { type: Number, required: false }, // Optional
+	  MSRP: { type: Number, required: true },
+	  isDeleted: { type: Boolean, default: false }
 	},
 	{
-		timestamps: true,
+	  timestamps: true, // Automatically add createdAt and updatedAt fields
+	  collection: 'cars', // Explicitly set the collection name
 	}
-);
+  );
 
 carSchema.pre(/^find/, function (next) {
 	if (!('_conditions' in this)) return next();
